@@ -1,4 +1,5 @@
 "use client";
+import CarsFiltersOption from "@/components/Home/CarsFiltersOption";
 import Hero from "@/components/Home/Hero";
 import SearchInput from "@/components/Home/SearchInput";
 
@@ -8,6 +9,8 @@ export default function Home() {
       <Hero />
 
       <SearchInput />
+
+      <CarsFiltersOption />
     </div>
   );
 }
