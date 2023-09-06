@@ -1,4 +1,5 @@
 "use client";
+import CarList from "@/components/Home/CarList";
 import CarsFiltersOption from "@/components/Home/CarsFiltersOption";
 import Hero from "@/components/Home/Hero";
 import SearchInput from "@/components/Home/SearchInput";
@@ -17,7 +18,7 @@ export default function Home() {
     const result = await getCarsList();
     console.log(result);
 
-    setCarList(result.carList)
+    setCarList(result.carLists)
   };
 
   return (
@@ -27,6 +28,8 @@ export default function Home() {
       <SearchInput />
 
       <CarsFiltersOption />
+
+      <CarList carList={carList}/>
     </div>
   );
 }

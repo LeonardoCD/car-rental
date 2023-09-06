@@ -10,10 +10,13 @@ export type CarType = {
   price: number;
   seat: number;
   updatedAt: string;
+  image: {
+    url: string;
+  };
 };
 
 export interface CarList {
-  carList: CarType[];
+  carLists: CarType[];
 }
 
 export const getCarsList = async () => {
@@ -29,14 +32,17 @@ export const getCarsList = async () => {
         price
         seat
         updatedAt
+        image {
+          url
+        }
       }
     }
   `;
 
   const response: CarList = await request(
-    'https://api-sa-east-1.hygraph.com/v2/clm5clb4r36t801t1h2qo8atz/master',
+    "https://api-sa-east-1.hygraph.com/v2/clm5clb4r36t801t1h2qo8atz/master",
     query
   );
-  
+
   return response;
 };
