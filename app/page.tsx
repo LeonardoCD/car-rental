@@ -6,9 +6,9 @@ import SearchInput from "@/components/Home/SearchInput";
 import { CarType, getCarsList } from "@/services";
 import { useEffect, useState } from "react";
 
-
 export default function Home() {
   const [carList, setCarList] = useState<CarType[]>([]);
+  const [carOrgList, setCarOrgList] = useState<CarType[]>([]);
 
   useEffect(() => {
     getCarList_();
@@ -16,9 +16,35 @@ export default function Home() {
 
   const getCarList_ = async () => {
     const result = await getCarsList();
-    console.log(result);
 
-    setCarList(result.carLists)
+    setCarList(result.carLists);
+
+    setCarOrgList(result.carLists);
+  };
+
+  const filterCarList = (brand: string) => {
+    if (!brand) {
+      setCarList(carOrgList);
+      return;
+    }
+
+    const filterList = carOrgList.filter(
+      (car: CarType) => car.carBrand === brand
+    );
+
+    setCarList(filterList);
+  };
+
+  const orderCarList = (order: number) => {
+    if (!order) {
+      setCarList(carOrgList);
+      return;
+    }
+    const sortedData = [...carOrgList].sort((a, b) =>
+      order === 1 ? b.price - a.price : a.price - b.price
+    );
+
+    setCarList(sortedData);
   };
 
   return (
@@ -27,9 +53,13 @@ export default function Home() {
 
       <SearchInput />
 
-      <CarsFiltersOption />
+      <CarsFiltersOption
+        carsList={carOrgList}
+        setBrand={filterCarList}
+        orderCarList={(value: number) => orderCarList(Number(value))}
+      />
 
-      <CarList carList={carList}/>
+      <CarList carList={carList} />
     </div>
   );
 }
