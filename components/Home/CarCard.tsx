@@ -11,7 +11,7 @@ interface CarCardProps {
 }
 
 export default function CarCard({ car }: CarCardProps) {
-  return (
+  return car &&(
     <div className="group bg-gray-50 p-2 sm:p-5 rounded-3xl m-1 sm:m-5 hover:bg-white hover:border-[1px] cursor-pointer duration-50 border-blue-500">
       <h2 className="text-[20px] font-medium mb-2">{car.name}</h2>
 
@@ -23,7 +23,7 @@ export default function CarCard({ car }: CarCardProps) {
 
       <div className="flex justify-center">
         <Image
-          src={car.image.url}
+          src={car?.image?.url}
           alt={car.name}
           width={220}
           height={200}
