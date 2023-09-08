@@ -1,5 +1,5 @@
 // import { BookCreatedFlagContext } from "@/context/BookCreatedFlagContext";
-// import { createBooking, getStoreLocations } from "@/services";
+import { LocationType, getStoreLocations } from "@/services";
 import { CarType } from "@/services";
 import { useUser } from "@clerk/nextjs";
 import React, { useContext, useEffect, useState } from "react";
@@ -8,8 +8,9 @@ interface FormProps {
   car: CarType
 }
 function Form({ car }: FormProps) {
-  const [storeLocation, setStoreLocation] = useState<any>([]);
+  const [storeLocation, setStoreLocation] = useState<LocationType[]>([]);
   // const { showToastMsg, setShowToastMsg } = useContext(BookCreatedFlagContext);
+
   const [formValue, setFormValue] = useState({
     location: "",
     pickUpDate: "",
@@ -22,6 +23,7 @@ function Form({ car }: FormProps) {
   });
 
   const today: any = new Date();
+
   useEffect(() => {
     getStoreLocation_();
   }, []);
@@ -36,8 +38,8 @@ function Form({ car }: FormProps) {
   }, [car]);
 
   const getStoreLocation_ = async () => {
-    // const resp: any = await getStoreLocations();
-    // setStoreLocation(resp?.storesLocations);
+    const resp = await getStoreLocations();
+    setStoreLocation(resp.storesLocations);
   };
 
   const handleChange = (event: any) => {
@@ -71,13 +73,13 @@ function Form({ car }: FormProps) {
           </option>
 
           {storeLocation &&
-            storeLocation.map((loc: any, index: number) => (
+            storeLocation.map((loc: LocationType, index: number) => (
               <option key={index}>{loc?.address}</option>
             ))}
         </select>
       </div>
 
-      <div className="flex flec-col gap-5 mb-5">
+      <div className="flex flex-col gap-5 mb-5">
         <div className="flex flex-col w-full">
           <label className="text-gray-400">Pick Up Date</label>
 
